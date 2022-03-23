@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import ErDiagram from "./svg_er/er";
+import { useState } from "react";
+import React, { Component } from 'react'
+import ZeroOneSvg from "./svg_er/zeroOneSvg";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isHoriz: true
+    }
+  }
+  
+  render() {
+    // const [isHoriz, setIsHoriz] = useState(true);
+
+    // const handleChangeChk = () => {
+    //   console.log("isHoriz", isHoriz)
+    //   setIsHoriz(!isHoriz)
+    // }
+
+
+    return (
+      <div className="App">
+        
+        <ErDiagram />
+        {/* <ZeroOneSvg /> */}
+      </div>
+    );
+  }
 }
 
 export default App;

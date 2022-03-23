@@ -1,0 +1,154 @@
+import React, { useState } from "react";
+
+const ErDiagramtemp = (props) => {
+  const [initailX, setInitialX] = React.useState(10);
+  const [initailY, setInitialY] = React.useState(10);
+  const [endX, setEndX] = React.useState(100);
+  const [endY, setEndY] = React.useState(50);
+  const [height, setHeight] = React.useState(0);
+  const [width, setWidth] = React.useState(0);
+  const [dPath, setDPath] = React.useState(" help");
+  // var d = "";
+  const svgPath = () => {
+    setHeight(parseInt(endX) - parseInt(initailX));
+    setWidth(parseInt(endX) - parseInt(initailX));
+    console.log(height, width);
+    newDPath();
+  };
+  const newDPath = () => {
+
+    console.log("log ", initailX, initailY, endX, endY)
+    let d = ""
+    d = "M" + initailX.toLocaleString() + " " + initailY.toString();
+    let newH = parseInt(width) / 20 + parseInt(initailX)
+    d += hMovePath(newH);
+    // newH = width/20+initailX
+    // v = initailY
+    d += yPath(parseInt(initailY));
+    d += hMovePath(parseInt(width) / 20 + newH);
+    d += yPath(parseInt(initailY));
+    d += hMovePath(parseInt(width) / 2 + parseInt(initailX));
+    d += " V" + endY;
+    d += hMovePath(parseInt(endX) - parseInt(width) / 20);
+    d += yPath(parseInt(endY));
+    d += hMovePath(parseInt(endX));
+
+    setDPath(d);
+  };
+  // Horizontal
+  const hMovePath = (x) => {
+    return (" H" + x.toString());
+  }
+
+  // Vertical line  
+  const yPath = (y) => {
+    return (" V" + (parseInt(y) - 5).toString() + " V" + (parseInt(y) + 5).toString() + " V" + (y).toString());
+  }
+
+  const initalXChangeHandler = (value) => {
+    setInitialX(value);
+    svgPath();
+  };
+
+  const initalYChangeHandler = (value) => {
+    setInitialY(value);
+    svgPath();
+  };
+  const endXChangeHandler = (value) => {
+    setEndX(value);
+    svgPath();
+  };
+  const endYChangeHandler = (value) => {
+    setEndY(value);
+    svgPath();
+  };
+  return (
+    <div>
+      <div>
+        <div>
+          <label htmlFor="initailX">initailX </label>
+          <input
+            type="text"
+            value={initailX}
+            id="initailX"
+            onChange={(e) => initalXChangeHandler(e.target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor="initailY">initailY </label>
+          <input
+            type="text"
+            value={initailY}
+            id="initailY"
+            onChange={(e) => initalYChangeHandler(e.target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor="endX">EndX </label>
+          <input
+            type="text"
+            value={endX}
+            id="endX"
+            onChange={(e) => endXChangeHandler(e.target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor="endY">endY </label>
+          <input
+            type="text"
+            value={endY}
+            id="endY"
+            onChange={(e) => endYChangeHandler(e.target.value)}
+          />
+        </div>
+        data: {dPath}
+      </div>
+      <div>
+        <svg width="200px" height="200px" viewBox="0 0 100 100">
+          <path
+            d={dPath}
+            stroke="black"
+            fill="transparent"
+          />
+        </svg>
+      </div>
+
+      <svg width="200px" height="200px" >
+        <path
+          d='M10 10 H14.5 V5 V15 V10 H19 V5 V15 V10 H55 V1 H100 '
+          stroke="black"
+          fill="transparent"
+        />
+      </svg>
+
+      <div>
+        <svg width="100px" height="100px">
+          <defs>
+            <marker id="triangle" viewBox="0 0 10 10"
+              refX="1" refY="5"
+              markerUnits="strokeWidth"
+              markerWidth="10" markerHeight="10"
+              orient="auto">
+              <path d="M 0 0 L 10 5 L 0 10 z" stroke="black" fill="transparent" />
+            </marker>
+
+            <marker id="revtriangle" viewBox="0 0 10 10"
+              refX="1" refY="5"
+              markerUnits="strokeWidth"
+              markerWidth="10" markerHeight="10"
+              orient="auto">
+              <path d="M 0 5 L 10 0 L 10 10 z" stroke="black" fill="black" />
+            </marker>
+          </defs>
+          <path stroke="black" fill="transparent"
+            d="M 10 10 H50"
+            markerStart="url(#triangle)"
+            markerEnd="url(#revtriangle)"
+          />
+        </svg>
+      </div>
+    </div>
+  );
+};
+
+export default ErDiagramtemp;
